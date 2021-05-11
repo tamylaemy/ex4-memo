@@ -1,7 +1,7 @@
 import Tache from './Tache';
 import './Taches.scss';
 import * as crudTaches from '../services/crud-taches';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Taches({etatTaches, utilisateur}) {
   const uid = utilisateur.uid;
@@ -36,6 +36,14 @@ export default function Taches({etatTaches, utilisateur}) {
     }
   }
 
+  function supprimerTache(idTache) {
+    crudTaches.supprimer(uid, idTache).then(
+      () => {
+        setTaches(taches.filter(t => t.id !== idTache))
+      }
+    )
+  }
+
   return (
     <section className="Taches">
       <form onSubmit={e => gererAjoutTache(uid, e)}>
@@ -49,7 +57,7 @@ export default function Taches({etatTaches, utilisateur}) {
       </form>
       <div className="listeTaches">
         {
-          taches.map(tache => <Tache key={tache.id} {... tache} />)
+          taches.map(tache => <Tache key={tache.id} {... tache} supprimerTache = {supprimerTache} uid = {uid} />)
         }
       </div>
     </section>
