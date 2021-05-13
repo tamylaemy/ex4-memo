@@ -40,6 +40,19 @@ export async function lireTout(uid) {
 
 }
 
+export async function basculer(uid, idTache, completee) {
+  if(completee == true) {
+    return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches).doc(idTache).update(
+        {completee: false}
+      )
+  }
+    else{
+      return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches).doc(idTache).update(
+        {completee: true}
+      )
+    }
+}
+
 export async function supprimer(uid, idTache) {
   return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches).doc(idTache).delete();
 }

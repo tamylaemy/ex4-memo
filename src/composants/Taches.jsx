@@ -36,6 +36,19 @@ export default function Taches({etatTaches, utilisateur}) {
     }
   }
 
+  function basculerTache(idTache, completee) {
+    crudTaches.basculer(utilisateur.uid, idTache, completee).then(
+      () => {
+        setTaches(taches.map(tache => {
+            if(tache.id == idTache){
+              tache.completee = !completee;
+            }
+            return tache;
+        }))
+      }
+    )
+  }
+
   function supprimerTache(idTache) {
     crudTaches.supprimer(uid, idTache).then(
       () => {
@@ -57,7 +70,7 @@ export default function Taches({etatTaches, utilisateur}) {
       </form>
       <div className="listeTaches">
         {
-          taches.map(tache => <Tache key={tache.id} {... tache} supprimerTache = {supprimerTache} uid = {uid} />)
+          taches.map(tache => <Tache key={tache.id} {... tache} basculerTache = {basculerTache} supprimerTache = {supprimerTache} uid = {uid} />)
         }
       </div>
     </section>
